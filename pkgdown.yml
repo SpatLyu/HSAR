@@ -2,8 +2,8 @@ pandoc: 3.1.11
 pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
-  hsar: hsar.html
-last_built: 2024-12-04T16:00Z
+  HSAR: HSAR.html
+last_built: 2024-12-04T16:11Z
 urls:
   reference: https://spatlyu.github.io/HSAR/reference
   article: https://spatlyu.github.io/HSAR/articles
