@@ -187,12 +187,97 @@ the <code>Matrix</code> library.</p></dd>
 <span class="r-in"><span>                <span class="va">popden</span> <span class="op">+</span> <span class="va">crimerate</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">betas</span><span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span>formula<span class="op">=</span><span class="va">res.formula</span>,data<span class="op">=</span><span class="va">landprice</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">pars</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>rho <span class="op">=</span> <span class="fl">0.5</span>, sigma2e <span class="op">=</span> <span class="fl">2.0</span>, betas <span class="op">=</span> <span class="va">betas</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">sar</span><span class="op">(</span><span class="va">res.formula</span>,data<span class="op">=</span><span class="va">landprice</span>,W<span class="op">=</span><span class="va">W</span>,</span></span>
 <span class="r-in"><span>           burnin<span class="op">=</span><span class="fl">500</span>, Nsim<span class="op">=</span><span class="fl">1000</span>, thinning<span class="op">=</span><span class="fl">1</span>,</span></span>
 <span class="r-in"><span>           parameters.start<span class="op">=</span><span class="va">pars</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>style is M (missing); style should be set to a valid value</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>style is M (missing); style should be set to a valid value</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>neighbour object has 4 sub-graphs</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>neighbour object has 4 sub-graphs</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sar(formula = res.formula, data = landprice, W = W, burnin = 500, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Nsim = 1000, thinning = 1, parameters.start = pars)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Type:  sar  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                          Mean          SD</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)       6.692659271 0.821582708</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> lnarea           -0.005703754 0.017245283</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> lndcbd           -0.093812794 0.048795925</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dsubway          -0.151066147 0.035977010</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dpark            -0.157082432 0.045501847</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dele             -0.029478755 0.031136321</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> popden            0.021820387 0.010123086</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> crimerate         0.006581084 0.004185754</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)1 -0.188791418 0.055353624</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)2 -0.028732593 0.117591116</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)3 -0.141198327 0.106523962</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)4  0.568283074 0.116757966</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)5  0.398618141 0.127220897</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)6  2.183383251 0.218838610</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Spatial Coefficients:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      rho </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.544068 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Diagnostics </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Deviance information criterion (DIC): 4704.887 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Effective number of parameters (pd): 956.0725 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Log likelihood: -1396.371 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Pseudo R squared: 0.3487775 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Impacts:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                        direct     indirect       total</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)       6.815286826  7.483055987 14.29834281</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> lnarea           -0.005808262 -0.006377362 -0.01218562</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> lndcbd           -0.095531697 -0.104891996 -0.20042369</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dsubway          -0.153834086 -0.168906916 -0.32274100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dpark            -0.159960606 -0.175633718 -0.33559432</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dele             -0.030018885 -0.032960168 -0.06297905</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> popden            0.022220195  0.024397354  0.04661755</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> crimerate         0.006701667  0.007358304  0.01405997</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)1 -0.192250585 -0.211087505 -0.40333809</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)2 -0.029259052 -0.032125885 -0.06138494</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)3 -0.143785461 -0.157873715 -0.30165918</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)4  0.578695551  0.635396766  1.21409232</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)5  0.405921899  0.445694565  0.85161646</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)6  2.223388716  2.441238743  4.66462746</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Quantiles:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                             5%          25%          50%          75%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)       5.3931321636  6.102344739  6.667925879  7.261131168</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> lnarea           -0.0328579787 -0.017805259 -0.005443984  0.005865107</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> lndcbd           -0.1719583291 -0.126473435 -0.094248991 -0.061389837</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dsubway          -0.2086087870 -0.174525097 -0.151688345 -0.127059403</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dpark            -0.2366361542 -0.187072950 -0.157027536 -0.126171278</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dele             -0.0799836946 -0.051391759 -0.029007668 -0.008189104</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> popden            0.0054129196  0.014553396  0.021759805  0.028808175</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> crimerate        -0.0004581391  0.003773817  0.006547580  0.009282714</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)1 -0.2756505015 -0.227269916 -0.190331369 -0.150788147</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)2 -0.2218306150 -0.106403948 -0.031509779  0.056263472</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)3 -0.3146393375 -0.212914997 -0.142246504 -0.070137649</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)4  0.3816845823  0.487045899  0.577141855  0.645571177</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)5  0.1922468443  0.311307645  0.402879081  0.481189056</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)6  1.8106568356  2.041326641  2.191568289  2.327773608</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                          95%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)       8.03383299</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> lnarea            0.02201095</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> lndcbd           -0.01651091</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dsubway          -0.09292392</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dpark            -0.08466489</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dele              0.02294826</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> popden            0.03870791</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> crimerate         0.01327714</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)1 -0.09626197</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)2  0.15447486</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)3  0.04359984</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)4  0.76317569</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)5  0.60496796</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)6  2.55235508</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

@@ -372,20 +372,104 @@ Two simpler versions of the HSAR model can also be fitted using the hsar() funct
 <span class="r-in"><span><span class="va">betas</span><span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span>formula<span class="op">=</span><span class="va">res.formula</span>,data<span class="op">=</span><span class="va">landprice</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">pars</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span> rho <span class="op">=</span> <span class="fl">0.5</span>,lambda <span class="op">=</span> <span class="fl">0.5</span>, sigma2e <span class="op">=</span> <span class="fl">2.0</span>, sigma2u <span class="op">=</span> <span class="fl">2.0</span>, betas <span class="op">=</span> <span class="va">betas</span> <span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span>  <span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">hsar</span><span class="op">(</span><span class="va">res.formula</span>,data<span class="op">=</span><span class="va">model.data</span>,W<span class="op">=</span><span class="va">W</span>,M<span class="op">=</span><span class="va">M</span>,Delta<span class="op">=</span><span class="va">Delta</span>,</span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span>  <span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">hsar</span><span class="op">(</span><span class="va">res.formula</span>, data<span class="op">=</span><span class="va">landprice</span>, W<span class="op">=</span><span class="va">W</span>, M<span class="op">=</span><span class="va">M</span>, Delta<span class="op">=</span><span class="va">Delta</span>,</span></span>
 <span class="r-in"><span>              burnin<span class="op">=</span><span class="fl">500</span>, Nsim<span class="op">=</span><span class="fl">1000</span>, thinning <span class="op">=</span> <span class="fl">1</span>, parameters.start<span class="op">=</span><span class="va">pars</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>style is M (missing); style should be set to a valid value</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>style is M (missing); style should be set to a valid value</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>neighbour object has 4 sub-graphs</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>neighbour object has 4 sub-graphs</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>style is M (missing); style should be set to a valid value</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>style is M (missing); style should be set to a valid value</span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> hsar(formula = res.formula, data = landprice, W = W, M = M, Delta = Delta, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     burnin = 500, Nsim = 1000, thinning = 1, parameters.start = pars)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Type:  hsar  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                          Mean          SD</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)      10.823382203 1.221871043</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> lnarea           -0.021329874 0.018183168</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> lndcbd           -0.322854608 0.098254836</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dsubway          -0.178585312 0.042194049</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dpark            -0.138172209 0.063856562</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dele             -0.011751765 0.036490094</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> popden            0.021742925 0.013632147</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> crimerate         0.005174869 0.008934741</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)1 -0.209125116 0.055401487</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)2 -0.019693758 0.121319935</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)3 -0.077408600 0.103388835</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)4  0.738310426 0.122220634</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)5  0.536615572 0.133706317</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)6  2.252085264 0.206765301</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Spatial Coefficients:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           rho   lambda</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.271906 0.721898</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Diagnostics </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Deviance information criterion (DIC): 5442.945 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Effective number of parameters (pd): 1394.183 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Log likelihood: -1327.29 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Pseudo R squared: 0.4187515 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Impacts:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                        direct     indirect        total</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)      10.861415061  3.997941320 14.859356381</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> lnarea           -0.021404826 -0.007878830 -0.029283655</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> lndcbd           -0.323989104 -0.119256047 -0.443245151</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dsubway          -0.179212852 -0.065965849 -0.245178701</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dpark            -0.138657740 -0.051038056 -0.189695796</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dele             -0.011793060 -0.004340867 -0.016133927</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> popden            0.021819329  0.008031403  0.029850732</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> crimerate         0.005193054  0.001911493  0.007104547</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)1 -0.209859972 -0.077246643 -0.287106615</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)2 -0.019762961 -0.007274481 -0.027037442</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)3 -0.077680610 -0.028593192 -0.106273802</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)4  0.740904814  0.272717133  1.013621947</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)5  0.538501214  0.198215080  0.736716294</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)6  2.259998986  0.831875338  3.091874324</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Quantiles:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                            5%          25%          50%          75%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)       8.892382596 10.018795558 10.773897803 11.620051926</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> lnarea           -0.051333621 -0.033551672 -0.022100726 -0.009389147</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> lndcbd           -0.490238287 -0.388114452 -0.323298408 -0.256423639</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dsubway          -0.246254692 -0.206408591 -0.182733963 -0.151003580</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dpark            -0.242219541 -0.185569865 -0.139622112 -0.095612120</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dele             -0.076146804 -0.036638809 -0.011648700  0.014138707</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> popden           -0.000529679  0.012910910  0.021625150  0.030909393</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> crimerate        -0.007668902 -0.001345453  0.005176461  0.011011118</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)1 -0.299065574 -0.245013902 -0.207679348 -0.172791782</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)2 -0.213710644 -0.092857276 -0.012155374  0.061563819</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)3 -0.248086487 -0.147803403 -0.076140168 -0.009761551</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)4  0.534222455  0.659020178  0.732390014  0.828634462</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)5  0.324173983  0.448940584  0.538454115  0.616658139</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)6  1.912667020  2.120298434  2.246687384  2.384850047</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                          95%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)      12.92742581</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> lnarea            0.01010697</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> lndcbd           -0.15816522</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dsubway          -0.10048557</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dpark            -0.03042691</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dele              0.04744300</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> popden            0.04619270</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> crimerate         0.02018651</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)1 -0.11619380</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)2  0.18518942</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)3  0.09040742</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)4  0.93623133</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)5  0.75861290</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)6  2.57297924</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="co"># visualise the district level random effect</span></span></span>
-<span class="r-in"><span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/classInt/" class="external-link">classInt</a></span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">RColorBrewer</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">Mus</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="va">breaks</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/classInt/reference/classIntervals.html" class="external-link">classIntervals</a></span><span class="op">(</span><span class="va">x</span>,<span class="fl">4</span>,<span class="st">"fisher"</span><span class="op">)</span><span class="op">$</span><span class="va">brks</span></span></span>
-<span class="r-in"><span>  <span class="va">groups</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">breaks</span>,include.lowest<span class="op">=</span><span class="cn">TRUE</span>,labels<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="va">palette</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html" class="external-link">brewer.pal</a></span><span class="op">(</span><span class="fl">4</span>, <span class="st">"Blues"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">groups</span> <span class="op">&lt;-</span> <span class="fu">sdsfun</span><span class="fu">::</span><span class="fu"><a href="https://stscl.github.io/sdsfun/reference/discretize_vector.html" class="external-link">discretize_vector</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">Mus</span>,n <span class="op">=</span> <span class="fl">4</span>,method <span class="op">=</span> <span class="st">"natural"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">palette</span> <span class="op">&lt;-</span> <span class="fu">RColorBrewer</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html" class="external-link">brewer.pal</a></span><span class="op">(</span><span class="fl">4</span>, <span class="st">"Blues"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">Beijingdistricts</span>,col<span class="op">=</span><span class="va">palette</span><span class="op">[</span><span class="va">groups</span><span class="op">]</span>,border<span class="op">=</span><span class="st">"grey"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+<span class="r-plt img"><img src="hsar-2.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
