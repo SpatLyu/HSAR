@@ -20,6 +20,7 @@ knitr::opts_chunk$set(
 [![DownloadsAll](https://badgen.net/cran/dt/HSAR?color=orange)](https://CRAN.R-project.org/package=HSAR)
 [![DownloadsMonth](https://cranlogs.r-pkg.org/badges/HSAR)](https://CRAN.R-project.org/package=HSAR)
 [![R-universe](https://spatlyu.r-universe.dev/badges/HSAR?color=cyan)](https://spatlyu.r-universe.dev/HSAR)
+[![R-CMD-check](https://github.com/SpatLyu/HSAR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/SpatLyu/HSAR/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 **Hierarchical Spatial Simultaneous Autoregressive Model (HSAR)**
