@@ -3,7 +3,7 @@ pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
   HSAR: HSAR.html
-last_built: 2025-10-16T05:23Z
+last_built: 2025-10-16T05:27Z
 urls:
   reference: https://spatlyu.github.io/HSAR/reference
   article: https://spatlyu.github.io/HSAR/articles
