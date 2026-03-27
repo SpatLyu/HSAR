@@ -10,6 +10,7 @@ hsar(
   W = NULL,
   M = NULL,
   Delta,
+  Durbin = FALSE,
   burnin = 5000,
   Nsim = 10000,
   thinning = 1,
@@ -31,6 +32,8 @@ less than 1, M is also row-normalised before running the HSAR model. As with W, 
 \item{Delta}{The N by J random effect design matrix that links the J by 1 higher-level random effect vector back to the N by 1 response variable under investigation. It is simply how lower-level units are grouped into each high-level units with columns of the matrix being each higher-level units. As with W and M, \eqn{\delta} should also be a
 column-oriented numeric sparse matrices.}
 
+\item{Durbin}{\code{logical}. Estimate Durbin model (i.e. include spatial lags of \code{X} as predictors)? Default \code{FALSE}.}
+
 \item{burnin}{The number of MCMC samples to discard as the burnin period.}
 
 \item{Nsim}{The total number of MCMC samples to generate.}
@@ -45,14 +48,19 @@ A \code{list}.
 \item{cbetas}{A matrix with the MCMC samples of the draws for the coefficients.}
 \item{Mbetas}{A vector of estimated mean values of regression coefficients. }
 \item{SDbetas}{The standard deviations of estimated regression coefficients.}
+\item{crho}{A vector with the MCMC samples of the draws for the lower-level spatial autoregressive parameter.}
 \item{Mrho}{The estimated mean of the lower-level spatial autoregressive parameter \eqn{\rho}.}
 \item{SDrho}{The standard deviation of the estimated lower-level spatial autoregressive parameter.}
-\item{Mlamda}{The estimated mean of the higher-level spatial autoregressive parameter \eqn{\lambda}.}
+\item{clambda}{A vector with the MCMC samples of the draws for the higher-level spatial autoregressive parameter.}
+\item{Mlambda}{The estimated mean of the higher-level spatial autoregressive parameter \eqn{\lambda}.}
 \item{SDlambda}{The standard deviation of the estimated higher-level spatial autoregressive parameter.}
+\item{csigma2e}{A vector with the MCMC samples of the draws for the lower-level variance parameter.}
 \item{Msigma2e}{The estimated mean of the lower-level variance parameter \eqn{\sigma^2_e}.}
 \item{SDsigma2e}{The standard deviation of the estimated lower-level variance parameter \eqn{\sigma^{2}_{e} }.}
+\item{csigma2u}{A vector with the MCMC samples of the draws for the higher-level variance parameter.}
 \item{Msigma2u}{The estimated mean of the higher-level variance parameter \eqn{\sigma^2_u}.}
 \item{SDsigma2u}{The standard deviation of the estimated higher-level variance parameter \eqn{\sigma^2_u}.}
+\item{cus}{A matrix with the MCMC samples of the draws of \eqn{\theta}.}
 \item{Mus}{Mean values of \eqn{\theta} }
 \item{SDus}{Standard deviation of \eqn{\theta} }
 \item{DIC}{The deviance information criterion (DIC) of the fitted model.}

@@ -8,6 +8,7 @@ sar(
   formula,
   data = NULL,
   W,
+  Durbin = FALSE,
   burnin = 5000,
   Nsim = 10000,
   thinning = 1,
@@ -29,6 +30,8 @@ converted to a sparse matrix before imported into the \code{sar()} function to s
 time. More specifically, W should be a column-oriented numeric sparse matrices of a \code{dgCMatrix} class defined in the
 \code{Matrix} package. The converion between a dense numeric matrix and a sparse numeric matrix is made quite convenient through
 the \code{Matrix} library.}
+
+\item{Durbin}{\code{logical}. Estimate Durbin model (i.e. include spatial lags of \code{X} as predictors)? Default \code{FALSE}.}
 
 \item{burnin}{The number of McMC samples to discard as the burnin period.}
 

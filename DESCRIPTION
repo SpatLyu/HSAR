@@ -1,6 +1,6 @@
 Package: HSAR
 Title: Hierarchical Spatial Autoregressive Model
-Version: 0.6.1
+Version: 0.7.3
 Authors@R: 
     c(
       person(given = "Guanpeng", family = "Dong",
@@ -38,6 +38,7 @@ Suggests:
     rmarkdown,
     sdsfun,
     sf,
+    stringr,
     tidyverse
 LinkingTo: 
     Rcpp,

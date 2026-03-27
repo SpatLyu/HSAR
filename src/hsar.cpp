@@ -70,7 +70,8 @@ List hsar_cpp_arma(arma::mat X, arma::vec y, arma::sp_mat W, arma::sp_mat M,
                    arma::sp_mat Z, arma::mat detval, arma::mat detvalM,
                    arma::vec Unum, int burnin, int Nsim, int thinning,
                    float rho_start, float lambda_start,
-                   float sigma2e_start, float sigma2u_start, arma::vec betas_start){
+                   float sigma2e_start, float sigma2u_start, arma::vec betas_start,
+                   bool Durbin){
 
   //Starting the MCMC SET UP
   //arma_rng::set_seed(124);
@@ -263,20 +264,39 @@ List hsar_cpp_arma(arma::mat X, arma::vec y, arma::sp_mat W, arma::sp_mat M,
   double r2 = diagnostic_Rsquared(y, y_hat_hsar(X, mean( Betas ), mean( rho ), W, Z ,mean( Us ) ));
 
   mat direct, indirect, total;
-  diagnostic_impacts( mean( Betas ), mean( rho ),W ,
-            direct, indirect, total);
+  if(Durbin) {
+    int half_p = (p - 1) / 2;
+
+    mat means = mean( Betas );
+
+    mat mean_betas = means.cols(1, half_p);
+    mat mean_thetas = means.cols(half_p + 1, p - 1);
+
+    diagnostic_impacts_Durbin(mean_betas, mean_thetas, mean(rho), W,
+                              direct, indirect, total);
+  } else {
+    mat mean_betas = mean( Betas );
+
+    diagnostic_impacts( mean_betas.cols(1, p - 1), mean( rho ),W , // 2025-05-27: don't include impact of `(Intercept)`
+                        direct, indirect, total);
+  }
 
   return List::create(Named("cbetas")= Betas,
                       Named("Mbetas")= mean( Betas ),
                       Named("SDbetas") = stddev( Betas ),
+                      Named("crho") = rho, // 2025-05-06: why not return the draws of all the things
                       Named("Mrho")= mean( rho ),
                       Named("SDrho") = stddev( rho ),
+                      Named("clambda") = lambda,
                       Named("Mlambda")= mean( lambda ),
                       Named("SDlambda") = stddev( lambda ),
+                      Named("csigma2e")= sigma2e,
                       Named("Msigma2e")= mean( sigma2e ),
                       Named("SDsigma2e") = stddev( sigma2e ),
+                      Named("csigma2u")= mean( sigma2u ),
                       Named("Msigma2u")= mean( sigma2u ),
                       Named("SDsigma2u") = stddev( sigma2u ),
+                      Named("cus")=  Us,
                       Named("Mus")= mean( Us ),
                       Named("SDus") = stddev( Us ),
                       Named("DIC") = dic,
@@ -285,7 +305,8 @@ List hsar_cpp_arma(arma::mat X, arma::vec y, arma::sp_mat W, arma::sp_mat M,
                       Named("R_Squared") = r2,
                       Named("impact_direct") = direct,
                       Named("impact_indirect") = indirect,
-                      Named("impact_total") = total);
+                      Named("impact_total") = total,
+                      Named("W") = W); // 2025-05-27: return W so we can take samples of impacts later
 
 }
 

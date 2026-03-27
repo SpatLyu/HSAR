@@ -19,6 +19,7 @@
 #' time. More specifically, W should be a column-oriented numeric sparse matrices of a `dgCMatrix` class defined in the
 #' `Matrix` package. The converion between a dense numeric matrix and a sparse numeric matrix is made quite convenient through
 #' the `Matrix` library.
+#' @param Durbin `logical`. Estimate Durbin model (i.e. include spatial lags of `X` as predictors)? Default `FALSE`.
 #' @param burnin The number of McMC samples to discard as the burnin period.
 #' @param Nsim The total number of McMC samples to generate.
 #' @param thinning MCMC thinning factor.
@@ -70,7 +71,7 @@
 #'            parameters.start=pars)
 #' summary(res)
 #' }
-sar <- function(formula, data = NULL, W,
+sar <- function(formula, data = NULL, W, Durbin = FALSE,
                 burnin = 5000, Nsim = 10000, thinning = 1,
                 parameters.start = NULL) {
 
@@ -82,9 +83,23 @@ sar <- function(formula, data = NULL, W,
     if (any(is.na(y))) stop("NAs in dependent variable", call. = FALSE)
     if (any(is.na(X))) stop("NAs in independent variable", call. = FALSE)
 
+    if(length(Durbin) != 1)           {stop("`Durbin` must be either TRUE or FALSE")}
+    if(!(Durbin %in% c(TRUE, FALSE))) {stop("`Durbin` must be either TRUE or FALSE")}
+
     n <- nrow(X)
 
     check_matrix_dimensions(W,n,'Wrong dimensions for matrix W' )
+
+    Xlabel <- colnames(X)
+    Xnames <- setdiff(Xlabel, "(Intercept)")
+
+    # 2025-05-20: attach lag X if `Durbin == TRUE`
+    # TODO 2025-05-20: is it OK to treat factor dummies the same as any other column?
+    lag_X <- if(Durbin) {W %*% X[, Xnames]}
+    lag_X <- if(Durbin) {as.matrix(lag_X)}
+    lag_X <- if(Durbin) {`colnames<-`(lag_X, paste0("lag_", Xnames))}
+
+    X <- if(Durbin) {cbind(X, lag_X)} else {X}
 
     detval <- lndet_imrw(W)
 
@@ -101,10 +116,10 @@ sar <- function(formula, data = NULL, W,
     else{
       rho<-0.5
       sigma2e <-2.0
-      betas <- stats::coef(stats::lm(formula,data))
+      betas <- if(Durbin) {stats::coef(stats::lm.fit(X, y))} else {stats::coef(stats::lm(formula,data))}
     }
 
-    result <- sar_cpp_arma(X, y, W, detval, burnin, Nsim, thinning, rho, sigma2e, betas )
+    result <- sar_cpp_arma(X, y, W, detval, burnin, Nsim, thinning, rho, sigma2e, betas, Durbin )
       #.Call("HSAR_sar_cpp_arma", PACKAGE = 'HSAR', X, y, W, detval,
        #            burnin, Nsim, thinning, rho, sigma2e, betas )
 
@@ -114,9 +129,10 @@ sar <- function(formula, data = NULL, W,
     result$Mbetas<-put_labels_to_coefficients(result$Mbetas, colnames(X))
     result$SDbetas<-put_labels_to_coefficients(result$SDbetas, colnames(X))
 
-    result$labels <- colnames(X)
+    result$labels <- Xlabel
     result$call <-match.call()
     result$formula <- formula
+    result$Durbin <- Durbin
 
     return(result)
 }
