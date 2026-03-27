@@ -1,0 +1,21 @@
+# Package index
+
+## Model
+
+- [`hsar()`](https://spatlyu.github.io/HSAR/reference/hsar.md) :
+  Hierarchical SAR model estimation
+- [`sar()`](https://spatlyu.github.io/HSAR/reference/sar.md) : SAR model
+  estimation
+
+## Data
+
+- [`Beijingdistricts`](https://spatlyu.github.io/HSAR/reference/Beijingdistricts.md)
+  : Boundaries of districts in Beijing
+- [`land`](https://spatlyu.github.io/HSAR/reference/land.md) : The
+  spatial locations of the Beijing land price data
+- [`landprice`](https://spatlyu.github.io/HSAR/reference/landprice.md) :
+  Leased residential land parcels, from 2003 to 2009 in Beijing, China
+- [`depmunic`](https://spatlyu.github.io/HSAR/reference/depmunic.md) :
+  Municipality departments of Athens
+- [`properties`](https://spatlyu.github.io/HSAR/reference/properties.md)
+  : Dataset of properties in the municipality of Athens
