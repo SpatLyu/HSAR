@@ -33,7 +33,7 @@ It is also useful to note that the HSAR model nests a standard (random intercept
 
     <a class="navbar-brand me-2" href="../index.html">HSAR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -85,6 +85,7 @@ It is also useful to note that the HSAR model nests a standard (random intercept
 <span>  W <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  M <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">Delta</span>,</span>
+<span>  Durbin <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  burnin <span class="op">=</span> <span class="fl">5000</span>,</span>
 <span>  Nsim <span class="op">=</span> <span class="fl">10000</span>,</span>
 <span>  thinning <span class="op">=</span> <span class="fl">1</span>,</span>
@@ -120,6 +121,10 @@ less than 1, M is also row-normalised before running the HSAR model. As with W, 
 column-oriented numeric sparse matrices.</p></dd>
 
 
+<dt id="arg-durbin">Durbin<a class="anchor" aria-label="anchor" href="#arg-durbin"></a></dt>
+<dd><p><code>logical</code>. Estimate Durbin model (i.e. include spatial lags of <code>X</code> as predictors)? Default <code>FALSE</code>.</p></dd>
+
+
 <dt id="arg-burnin">burnin<a class="anchor" aria-label="anchor" href="#arg-burnin"></a></dt>
 <dd><p>The number of MCMC samples to discard as the burnin period.</p></dd>
 
@@ -147,17 +152,26 @@ column-oriented numeric sparse matrices.</p></dd>
 <dt>SDbetas</dt>
 <dd><p>The standard deviations of estimated regression coefficients.</p></dd>
 
+<dt>crho</dt>
+<dd><p>A vector with the MCMC samples of the draws for the lower-level spatial autoregressive parameter.</p></dd>
+
 <dt>Mrho</dt>
 <dd><p>The estimated mean of the lower-level spatial autoregressive parameter \(\rho\).</p></dd>
 
 <dt>SDrho</dt>
 <dd><p>The standard deviation of the estimated lower-level spatial autoregressive parameter.</p></dd>
 
-<dt>Mlamda</dt>
+<dt>clambda</dt>
+<dd><p>A vector with the MCMC samples of the draws for the higher-level spatial autoregressive parameter.</p></dd>
+
+<dt>Mlambda</dt>
 <dd><p>The estimated mean of the higher-level spatial autoregressive parameter \(\lambda\).</p></dd>
 
 <dt>SDlambda</dt>
 <dd><p>The standard deviation of the estimated higher-level spatial autoregressive parameter.</p></dd>
+
+<dt>csigma2e</dt>
+<dd><p>A vector with the MCMC samples of the draws for the lower-level variance parameter.</p></dd>
 
 <dt>Msigma2e</dt>
 <dd><p>The estimated mean of the lower-level variance parameter \(\sigma^2_e\).</p></dd>
@@ -165,11 +179,17 @@ column-oriented numeric sparse matrices.</p></dd>
 <dt>SDsigma2e</dt>
 <dd><p>The standard deviation of the estimated lower-level variance parameter \(\sigma^{2}_{e} \).</p></dd>
 
+<dt>csigma2u</dt>
+<dd><p>A vector with the MCMC samples of the draws for the higher-level variance parameter.</p></dd>
+
 <dt>Msigma2u</dt>
 <dd><p>The estimated mean of the higher-level variance parameter \(\sigma^2_u\).</p></dd>
 
 <dt>SDsigma2u</dt>
 <dd><p>The standard deviation of the estimated higher-level variance parameter \(\sigma^2_u\).</p></dd>
+
+<dt>cus</dt>
+<dd><p>A matrix with the MCMC samples of the draws of \(\theta\).</p></dd>
 
 <dt>Mus</dt>
 <dd><p>Mean values of \(\theta\)</p></dd>
@@ -423,20 +443,19 @@ Two simpler versions of the HSAR model can also be fitted using the hsar() funct
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Impacts:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                        direct     indirect        total</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)      10.861415061  3.997941320 14.859356381</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> lnarea           -0.021404826 -0.007878830 -0.029283655</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> lndcbd           -0.323989104 -0.119256047 -0.443245151</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dsubway          -0.179212852 -0.065965849 -0.245178701</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dpark            -0.138657740 -0.051038056 -0.189695796</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dele             -0.011793060 -0.004340867 -0.016133927</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> popden            0.021819329  0.008031403  0.029850732</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> crimerate         0.005193054  0.001911493  0.007104547</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)1 -0.209859972 -0.077246643 -0.287106615</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)2 -0.019762961 -0.007274481 -0.027037442</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)3 -0.077680610 -0.028593192 -0.106273802</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)4  0.740904814  0.272717133  1.013621947</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)5  0.538501214  0.198215080  0.736716294</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)6  2.259998986  0.831875338  3.091874324</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> lnarea           -0.021404826 -0.021404826 -0.021404826</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> lndcbd           -0.323989104 -0.323989104 -0.323989104</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dsubway          -0.179212852 -0.179212852 -0.179212852</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dpark            -0.138657740 -0.138657740 -0.138657740</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dele             -0.011793060 -0.011793060 -0.011793060</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> popden            0.021819329  0.021819329  0.021819329</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> crimerate         0.005193054  0.005193054  0.005193054</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)1 -0.209859972 -0.209859972 -0.209859972</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)2 -0.019762961 -0.019762961 -0.019762961</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)3 -0.077680610 -0.077680610 -0.077680610</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)4  0.740904814  0.740904814  0.740904814</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)5  0.538501214  0.538501214  0.538501214</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)6  2.259998986  2.259998986  2.259998986</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Quantiles:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                            5%          25%          50%          75%</span>

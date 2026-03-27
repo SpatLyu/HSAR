@@ -6,6 +6,8 @@
   Hierarchical SAR model estimation
 - [`sar()`](https://spatlyu.github.io/HSAR/reference/sar.md) : SAR model
   estimation
+- [`mcmc_impacts()`](https://spatlyu.github.io/HSAR/reference/mcmc_impacts.md)
+  : Estimate impact per MCMC draw of coefficients
 
 ## Data
 

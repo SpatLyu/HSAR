@@ -37,6 +37,7 @@ hsar(
   W = NULL,
   M = NULL,
   Delta,
+  Durbin = FALSE,
   burnin = 5000,
   Nsim = 10000,
   thinning = 1,
@@ -93,6 +94,11 @@ hsar(
   higher-level units. As with W and M, \\\delta\\ should also be a
   column-oriented numeric sparse matrices.
 
+- Durbin:
+
+  `logical`. Estimate Durbin model (i.e. include spatial lags of `X` as
+  predictors)? Default `FALSE`.
+
 - burnin:
 
   The number of MCMC samples to discard as the burnin period.
@@ -128,6 +134,11 @@ A `list`.
 
   The standard deviations of estimated regression coefficients.
 
+- crho:
+
+  A vector with the MCMC samples of the draws for the lower-level
+  spatial autoregressive parameter.
+
 - Mrho:
 
   The estimated mean of the lower-level spatial autoregressive parameter
@@ -138,7 +149,12 @@ A `list`.
   The standard deviation of the estimated lower-level spatial
   autoregressive parameter.
 
-- Mlamda:
+- clambda:
+
+  A vector with the MCMC samples of the draws for the higher-level
+  spatial autoregressive parameter.
+
+- Mlambda:
 
   The estimated mean of the higher-level spatial autoregressive
   parameter \\\lambda\\.
@@ -147,6 +163,11 @@ A `list`.
 
   The standard deviation of the estimated higher-level spatial
   autoregressive parameter.
+
+- csigma2e:
+
+  A vector with the MCMC samples of the draws for the lower-level
+  variance parameter.
 
 - Msigma2e:
 
@@ -158,6 +179,11 @@ A `list`.
   The standard deviation of the estimated lower-level variance parameter
   \\\sigma^{2}\_{e} \\.
 
+- csigma2u:
+
+  A vector with the MCMC samples of the draws for the higher-level
+  variance parameter.
+
 - Msigma2u:
 
   The estimated mean of the higher-level variance parameter
@@ -167,6 +193,10 @@ A `list`.
 
   The standard deviation of the estimated higher-level variance
   parameter \\\sigma^2_u\\.
+
+- cus:
+
+  A matrix with the MCMC samples of the draws of \\\theta\\.
 
 - Mus:
 
@@ -453,20 +483,19 @@ pars=list( rho = 0.5,lambda = 0.5, sigma2e = 2.0, sigma2u = 2.0, betas = betas )
 #> 
 #>  Impacts:
 #>                        direct     indirect        total
-#> (Intercept)      10.861415061  3.997941320 14.859356381
-#> lnarea           -0.021404826 -0.007878830 -0.029283655
-#> lndcbd           -0.323989104 -0.119256047 -0.443245151
-#> dsubway          -0.179212852 -0.065965849 -0.245178701
-#> dpark            -0.138657740 -0.051038056 -0.189695796
-#> dele             -0.011793060 -0.004340867 -0.016133927
-#> popden            0.021819329  0.008031403  0.029850732
-#> crimerate         0.005193054  0.001911493  0.007104547
-#> as.factor(year)1 -0.209859972 -0.077246643 -0.287106615
-#> as.factor(year)2 -0.019762961 -0.007274481 -0.027037442
-#> as.factor(year)3 -0.077680610 -0.028593192 -0.106273802
-#> as.factor(year)4  0.740904814  0.272717133  1.013621947
-#> as.factor(year)5  0.538501214  0.198215080  0.736716294
-#> as.factor(year)6  2.259998986  0.831875338  3.091874324
+#> lnarea           -0.021404826 -0.021404826 -0.021404826
+#> lndcbd           -0.323989104 -0.323989104 -0.323989104
+#> dsubway          -0.179212852 -0.179212852 -0.179212852
+#> dpark            -0.138657740 -0.138657740 -0.138657740
+#> dele             -0.011793060 -0.011793060 -0.011793060
+#> popden            0.021819329  0.021819329  0.021819329
+#> crimerate         0.005193054  0.005193054  0.005193054
+#> as.factor(year)1 -0.209859972 -0.209859972 -0.209859972
+#> as.factor(year)2 -0.019762961 -0.019762961 -0.019762961
+#> as.factor(year)3 -0.077680610 -0.077680610 -0.077680610
+#> as.factor(year)4  0.740904814  0.740904814  0.740904814
+#> as.factor(year)5  0.538501214  0.538501214  0.538501214
+#> as.factor(year)6  2.259998986  2.259998986  2.259998986
 #> 
 #>  Quantiles:
 #>                            5%          25%          50%          75%

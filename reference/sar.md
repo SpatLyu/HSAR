@@ -11,6 +11,7 @@ sar(
   formula,
   data = NULL,
   W,
+  Durbin = FALSE,
   burnin = 5000,
   Nsim = 10000,
   thinning = 1,
@@ -47,6 +48,11 @@ sar(
   in the `Matrix` package. The converion between a dense numeric matrix
   and a sparse numeric matrix is made quite convenient through the
   `Matrix` library.
+
+- Durbin:
+
+  `logical`. Estimate Durbin model (i.e. include spatial lags of `X` as
+  predictors)? Default `FALSE`.
 
 - burnin:
 
@@ -222,7 +228,6 @@ summary(res)
 #> 
 #>  Impacts:
 #>                        direct     indirect       total
-#> (Intercept)       6.815286826  7.483055987 14.29834281
 #> lnarea           -0.005808262 -0.006377362 -0.01218562
 #> lndcbd           -0.095531697 -0.104891996 -0.20042369
 #> dsubway          -0.153834086 -0.168906916 -0.32274100
